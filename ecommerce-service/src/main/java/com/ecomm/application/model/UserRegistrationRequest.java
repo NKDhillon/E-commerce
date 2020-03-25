@@ -5,8 +5,6 @@ package com.ecomm.application.model;
 
 import lombok.Data;
 
-import org.springframework.data.annotation.Id;
-
 /**
  * @author Navneet Kaur
  */
