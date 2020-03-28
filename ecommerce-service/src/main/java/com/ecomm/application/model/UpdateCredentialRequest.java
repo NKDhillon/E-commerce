@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class UpdateCredentialRequest {
 	
-	private String email;
+	private String emailId;
 	private String oldPassword;
 	private String newPassword;
 	

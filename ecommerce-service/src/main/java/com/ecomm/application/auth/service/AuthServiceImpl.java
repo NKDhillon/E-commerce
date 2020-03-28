@@ -3,6 +3,7 @@
  */
 package com.ecomm.application.auth.service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,17 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public String login(Credential credential) {
-		if (credential.getUsername().equals(repository.findByEmailId(credential.getUsername()).getEmailId())
-				&& credential.getPassword().equals(repository.findByEmailId(credential.getPassword()).getPassword()))
-			return "SUCCESS : Logged In successfully";
-		else
-			return "FAIL : Incorrect Credentials";
+		if(repository.findByEmailId(credential.getUsername())!=null) {
+			if(repository.findByEmailId(credential.getUsername()).getPassword()!=null){
+				if (credential.getUsername().equals(repository.findByEmailId(credential.getUsername()).getEmailId())
+						&& credential.getPassword().equals(repository.findByEmailId(credential.getUsername()).getPassword()))
+					return "SUCCESS : Logged In successfully";
+				else
+					return "FAIL : Incorrect Credentials";
+			} else
+				return "Incorrect Password";
+		} else
+			return "Incorrect Username";
 	}
 
 	@Override
@@ -37,12 +44,14 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public String updateCredentials(UpdateCredentialRequest UpdateCredentialRequest) {
-		if (UpdateCredentialRequest.getEmail()
-				.equals(repository.findByEmailId(UpdateCredentialRequest.getEmail()).getEmailId())
+		if (UpdateCredentialRequest.getEmailId()
+				.equals(repository.findByEmailId(UpdateCredentialRequest.getEmailId()).getEmailId())
 				&& UpdateCredentialRequest.getOldPassword()
-						.equals(repository.findByEmailId(UpdateCredentialRequest.getEmail()).getPassword())) {
-			repository.findByEmailId(UpdateCredentialRequest.getEmail())
-					.setPassword(UpdateCredentialRequest.getNewPassword());
+						.equals(repository.findByEmailId(UpdateCredentialRequest.getEmailId()).getPassword())) {
+			UserRegistrationRequest user = repository.findByEmailId(UpdateCredentialRequest.getEmailId());
+			user.setPassword(UpdateCredentialRequest.getNewPassword());
+			repository.delete(repository.findByEmailId(UpdateCredentialRequest.getEmailId()));
+			//repository.save(user);
 			return "Updated Successfully";
 		} else
 			return "Incorrect Credetials";
@@ -59,7 +68,12 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public List<UserRegistrationRequest> viewAll() {
-		return repository.findAll();
+		List<UserRegistrationRequest> allUsers = new LinkedList<UserRegistrationRequest>();
+		for(UserRegistrationRequest user : repository.findAll()) {
+			//user.setPassword("*****");
+			allUsers.add(user);
+		}
+		return allUsers;
 	}
 
 }
