@@ -53,10 +53,10 @@ public class Controller {
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 	}
 	
-	@GetMapping("/login")
+	@GetMapping("/user/login")
 	public ResponseEntity<String> login(@RequestBody Credential credential) {
 		String response = authService.login(credential);
-		if(response.equals("SUCCESS"))
+		if(response.contains("SUCCESS"))
 			return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
 		else
 			return new ResponseEntity<String>(response, HttpStatus.UNAUTHORIZED);
@@ -73,11 +73,15 @@ public class Controller {
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 	
-	@SuppressWarnings("rawtypes")
-	@PutMapping("/updateCredentials")
-	public ResponseEntity updateCredentials(@RequestBody UpdateCredentialRequest updateCredentialRequest) {
-		authService.updateCredentials(updateCredentialRequest);
-		return new ResponseEntity(HttpStatus.ACCEPTED);
+	@PutMapping("/user/updateCredentials")
+	public ResponseEntity<String> updateCredentials(@RequestBody UpdateCredentialRequest updateCredentialRequest) {
+		String response = authService.updateCredentials(updateCredentialRequest);
+		
+		if(response.contains("Updated"))
+			return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
+		else
+			return new ResponseEntity<String>(response, HttpStatus.UNAUTHORIZED);
+		
 	}
 
 	@GetMapping("/cart/add")

@@ -3,9 +3,9 @@
  */
 package com.ecomm.application.model;
 
-import lombok.Data;
-
 import org.springframework.data.annotation.Id;
+
+import lombok.Data;
 
 /**
  * @author Navneet Kaur
@@ -14,8 +14,10 @@ import org.springframework.data.annotation.Id;
 @Data
 public class UserRegistrationRequest {
 	
-	private String name;
+	@Id
+	private String userId;
 	private String emailId;
+	private String name;
 	private String password;
 	private long telephoneNumber;
 	

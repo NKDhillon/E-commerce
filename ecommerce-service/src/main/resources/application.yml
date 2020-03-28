@@ -1,0 +1,12 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: e-commerce-service
+  data:
+    mongodb:
+      authentication-database: admin
+      database: e_commerceDB
+      username: root
+      password: root
+      uri:  mongodb://root:root@localhost:27017
