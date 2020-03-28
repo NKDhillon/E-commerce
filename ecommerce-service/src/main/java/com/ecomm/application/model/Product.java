@@ -3,6 +3,8 @@
  */
 package com.ecomm.application.model;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.Data;
 
 /**
@@ -12,10 +14,14 @@ import lombok.Data;
 @Data
 public class Product {
 
+	@Id
+	private String Id;
+	private int productId;
 	private int price;
 	private int quantity;
 	private String productName;
-	private String productType;
+	private String category;
 	private String productVendor;
+	private String warranty;
 	
 }

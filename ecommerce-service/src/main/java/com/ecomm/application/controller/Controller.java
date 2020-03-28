@@ -105,11 +105,10 @@ public class Controller {
 		return new ResponseEntity<List<CartObject>>(responseList, HttpStatus.OK);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/product/add")
-	public ResponseEntity addProductList(@RequestBody List<Product> productList) {
-		productService.addProduct(productList);
-		return new ResponseEntity(HttpStatus.ACCEPTED);
+	public ResponseEntity<String> addProductList(@RequestBody List<Product> productList) {
+		String response = productService.addProduct(productList);
+		return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -119,7 +118,7 @@ public class Controller {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@GetMapping("/product/view")
+	@GetMapping("/product/viewAll")
 	public ResponseEntity<List<Product>> viewProductList() {
 		List<Product> responseList = new LinkedList<Product>();
 		responseList = productService.viewProduct();

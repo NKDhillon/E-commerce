@@ -20,19 +20,33 @@ public class productServiceImpl implements ProductService {
 	ProductRepository repository;
 	
 	@Override
-	public void addProduct(List<Product> product) {
-		// TODO Auto-generated method stub	
+	public String addProduct(List<Product> product) {
+		for (Product item : product) {
+			if (repository.findByProductId(item.getProductId()) != null) {
+				item.setQuantity(repository.findByProductId(item.getProductId()).getQuantity() + item.getQuantity());
+				repository.deleteByProductId(item.getProductId());
+				repository.save(item);
+			} else {
+				repository.save(item);
+			}
+		}
+		return product.size() + " items added successfully ";
 	}
 
 	@Override
 	public void deleteProduct(List<Product> product) {
-		// TODO Auto-generated method stub
+		for (Product item : product) {
+			if (repository.findByProductId(item.getProductId()) != null) {
+				item.setQuantity(repository.findByProductId(item.getProductId()).getQuantity() - item.getQuantity());
+				repository.deleteByProductId(item.getProductId());
+				repository.save(item);
+			}
+		}
 	}
 
 	@Override
 	public List<Product> viewProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll();
 	}
 
 }

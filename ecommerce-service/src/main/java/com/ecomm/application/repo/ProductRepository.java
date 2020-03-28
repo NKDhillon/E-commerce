@@ -15,4 +15,6 @@ import com.ecomm.application.model.Product;
 @Repository
 public interface ProductRepository extends MongoRepository<Product, String> {
 
+	Product findByProductId(int i);
+	void deleteByProductId(int i);
 }
