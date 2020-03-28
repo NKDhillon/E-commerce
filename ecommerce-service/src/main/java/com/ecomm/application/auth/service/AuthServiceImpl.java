@@ -44,14 +44,16 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public String updateCredentials(UpdateCredentialRequest UpdateCredentialRequest) {
-		if (UpdateCredentialRequest.getEmailId()
+		
+		if (repository.findByEmailId(UpdateCredentialRequest.getEmailId())!=null
+				&& UpdateCredentialRequest.getEmailId()
 				.equals(repository.findByEmailId(UpdateCredentialRequest.getEmailId()).getEmailId())
 				&& UpdateCredentialRequest.getOldPassword()
 						.equals(repository.findByEmailId(UpdateCredentialRequest.getEmailId()).getPassword())) {
 			UserRegistrationRequest user = repository.findByEmailId(UpdateCredentialRequest.getEmailId());
 			user.setPassword(UpdateCredentialRequest.getNewPassword());
 			repository.delete(repository.findByEmailId(UpdateCredentialRequest.getEmailId()));
-			//repository.save(user);
+			repository.save(user);
 			return "Updated Successfully";
 		} else
 			return "Incorrect Credetials";
@@ -70,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
 	public List<UserRegistrationRequest> viewAll() {
 		List<UserRegistrationRequest> allUsers = new LinkedList<UserRegistrationRequest>();
 		for(UserRegistrationRequest user : repository.findAll()) {
-			//user.setPassword("*****");
+			user.setPassword("*****");
 			allUsers.add(user);
 		}
 		return allUsers;

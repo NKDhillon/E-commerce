@@ -56,7 +56,7 @@ public class Controller {
 	@GetMapping("/user/login")
 	public ResponseEntity<String> login(@RequestBody Credential credential) {
 		String response = authService.login(credential);
-		if(response.equals("SUCCESS"))
+		if(response.contains("SUCCESS"))
 			return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
 		else
 			return new ResponseEntity<String>(response, HttpStatus.UNAUTHORIZED);
