@@ -15,8 +15,11 @@ import com.ecomm.application.model.Product;
 
 @Service
 public interface ProductService {
-	
+
 	public String addProduct(List<Product> product);
+
 	public void deleteProduct(List<Product> product);
+
 	public List<Product> viewProduct();
+	
 }

@@ -35,7 +35,13 @@ public class productServiceImpl implements ProductService {
 
 	@Override
 	public void deleteProduct(List<Product> product) {
-		// TODO Auto-generated method stub
+		for (Product item : product) {
+			if (repository.findByProductId(item.getProductId()) != null) {
+				item.setQuantity(repository.findByProductId(item.getProductId()).getQuantity() - item.getQuantity());
+				repository.deleteByProductId(item.getProductId());
+				repository.save(item);
+			}
+		}
 	}
 
 	@Override
