@@ -105,11 +105,10 @@ public class Controller {
 		return new ResponseEntity<List<CartObject>>(responseList, HttpStatus.OK);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/product/add")
-	public ResponseEntity addProductList(@RequestBody List<Product> productList) {
-		productService.addProduct(productList);
-		return new ResponseEntity(HttpStatus.ACCEPTED);
+	public ResponseEntity<String> addProductList(@RequestBody List<Product> productList) {
+		String response = productService.addProduct(productList);
+		return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
 	}
 
 	@SuppressWarnings("rawtypes")
