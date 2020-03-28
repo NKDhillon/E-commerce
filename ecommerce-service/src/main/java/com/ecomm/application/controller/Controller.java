@@ -118,7 +118,7 @@ public class Controller {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@GetMapping("/product/view")
+	@GetMapping("/product/viewAll")
 	public ResponseEntity<List<Product>> viewProductList() {
 		List<Product> responseList = new LinkedList<Product>();
 		responseList = productService.viewProduct();

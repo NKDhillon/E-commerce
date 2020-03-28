@@ -40,8 +40,7 @@ public class productServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> viewProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll();
 	}
 
 }
