@@ -26,6 +26,7 @@ import com.ecomm.application.model.Product;
 import com.ecomm.application.model.UpdateCredentialRequest;
 import com.ecomm.application.model.UserRegistrationRequest;
 import com.ecomm.application.product.service.ProductService;
+import com.ecomm.application.util.Constants;
 
 /**
  * @author Navneet Kaur
@@ -47,7 +48,7 @@ public class Controller {
 	@PostMapping("/user/register")
 	public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest){
 		String response = authService.register(userRegistrationRequest);
-		if(response.contains("Registered"))
+		if(response.contains(Constants.REGISTERED))
 			return new ResponseEntity<String>(response, HttpStatus.CREATED);
 		else
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
@@ -56,7 +57,7 @@ public class Controller {
 	@GetMapping("/user/login")
 	public ResponseEntity<String> login(@RequestBody Credential credential) {
 		String response = authService.login(credential);
-		if(response.contains("SUCCESS"))
+		if(response.contains(Constants.SUCCESS))
 			return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
 		else
 			return new ResponseEntity<String>(response, HttpStatus.UNAUTHORIZED);
@@ -77,7 +78,7 @@ public class Controller {
 	public ResponseEntity<String> updateCredentials(@RequestBody UpdateCredentialRequest updateCredentialRequest) {
 		String response = authService.updateCredentials(updateCredentialRequest);
 		
-		if(response.contains("Updated"))
+		if(response.contains(Constants.UPDATED))
 			return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
 		else
 			return new ResponseEntity<String>(response, HttpStatus.UNAUTHORIZED);
