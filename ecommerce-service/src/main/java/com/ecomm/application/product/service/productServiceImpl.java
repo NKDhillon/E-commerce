@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ecomm.application.model.Product;
-import com.ecomm.application.repo.ProductRepository;
+import com.ecomm.application.pg.repo.ProductRepository;
 
 /**
  * @author Navneet Kaur

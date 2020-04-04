@@ -3,10 +3,10 @@ server:
 spring:
   application:
     name: e-commerce-service
-  data:
-    mongodb:
-      authentication-database: admin
-      database: e_commerceDB
-      username: root
+  datasource:
+      url: jdbc:postgresql://localhost:5432/ECommerce
+      username: postgres
       password: root
-      uri:  mongodb://root:root@localhost:27017
+      driverClassName: org.postgresql.Driver
+  jpa:
+   database: POSTGRESQL

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ecomm.application.model.Credential;
 import com.ecomm.application.model.UpdateCredentialRequest;
 import com.ecomm.application.model.UserRegistrationRequest;
-import com.ecomm.application.repo.AuthRepository;
+import com.ecomm.application.pg.repo.UserRepository;
 import com.ecomm.application.util.Constants;
 
 /**
@@ -20,15 +20,16 @@ import com.ecomm.application.util.Constants;
 
 public class AuthServiceImpl implements AuthService {
 
+	
 	@Autowired
-	AuthRepository repository;
+	UserRepository userRepository;
 
 	@Override
 	public String login(Credential credential) {
-		if(repository.findByEmailId(credential.getUsername())!=null) {
-			if(repository.findByEmailId(credential.getUsername()).getPassword()!=null){
-				if (credential.getUsername().equals(repository.findByEmailId(credential.getUsername()).getEmailId())
-						&& credential.getPassword().equals(repository.findByEmailId(credential.getUsername()).getPassword()))
+		if(userRepository.findByEmailId(credential.getUsername())!=null) {
+			if(userRepository.findByEmailId(credential.getUsername()).getPassword()!=null){
+				if (credential.getUsername().equals(userRepository.findByEmailId(credential.getUsername()).getEmailId())
+						&& credential.getPassword().equals(userRepository.findByEmailId(credential.getUsername()).getPassword()))
 					return Constants.LOGGED_IN;
 				else
 					return Constants.INCORRECT_CREDENTIALS;
@@ -46,15 +47,15 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public String updateCredentials(UpdateCredentialRequest UpdateCredentialRequest) {
 		
-		if (repository.findByEmailId(UpdateCredentialRequest.getEmailId())!=null
+		if (userRepository.findByEmailId(UpdateCredentialRequest.getEmailId())!=null
 				&& UpdateCredentialRequest.getEmailId()
-				.equals(repository.findByEmailId(UpdateCredentialRequest.getEmailId()).getEmailId())
+				.equals(userRepository.findByEmailId(UpdateCredentialRequest.getEmailId()).getEmailId())
 				&& UpdateCredentialRequest.getOldPassword()
-						.equals(repository.findByEmailId(UpdateCredentialRequest.getEmailId()).getPassword())) {
-			UserRegistrationRequest user = repository.findByEmailId(UpdateCredentialRequest.getEmailId());
+						.equals(userRepository.findByEmailId(UpdateCredentialRequest.getEmailId()).getPassword())) {
+			UserRegistrationRequest user = userRepository.findByEmailId(UpdateCredentialRequest.getEmailId());
 			user.setPassword(UpdateCredentialRequest.getNewPassword());
-			repository.delete(repository.findByEmailId(UpdateCredentialRequest.getEmailId()));
-			repository.save(user);
+			userRepository.delete(userRepository.findByEmailId(UpdateCredentialRequest.getEmailId()));
+			userRepository.save(user);
 			return Constants.UPDATE_SUCCESS;
 		} else
 			return Constants.INCORRECT_CREDENTIALS;
@@ -62,17 +63,17 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public String register(UserRegistrationRequest userRegistrationRequest) {
-		if (repository.findByEmailId(userRegistrationRequest.getEmailId()) != null)
+		if (userRepository.findByEmailId(userRegistrationRequest.getEmailId()) != null)
 			return userRegistrationRequest.getEmailId() + Constants.ALREADY_REGISTERED;
 		else
-			repository.save(userRegistrationRequest);
+			userRepository.save(userRegistrationRequest);
 		return Constants.REGISTER_SUCCESS;
 	}
 
 	@Override
 	public List<UserRegistrationRequest> viewAll() {
 		List<UserRegistrationRequest> allUsers = new LinkedList<UserRegistrationRequest>();
-		for(UserRegistrationRequest user : repository.findAll()) {
+		for(UserRegistrationRequest user : userRepository.findAll()) {
 			user.setPassword(Constants.STARS);
 			allUsers.add(user);
 		}
