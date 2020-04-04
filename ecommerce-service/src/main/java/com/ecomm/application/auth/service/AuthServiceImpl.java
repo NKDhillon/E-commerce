@@ -77,7 +77,7 @@ public class AuthServiceImpl implements AuthService {
 			user.setPassword(Constants.STARS);
 			allUsers.add(user);
 		}
-		return allUsers;
+		return allUsers ;
 	}
 
 }
