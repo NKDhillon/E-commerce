@@ -3,7 +3,14 @@
  */
 package com.ecomm.application.model;
 
-import org.springframework.data.annotation.Id;
+import java.io.Serializable;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import lombok.Data;
 
@@ -11,11 +18,16 @@ import lombok.Data;
  * @author Navneet Kaur
  */
 
+@Entity
 @Data
-public class Product {
-
+@Access(value = AccessType.FIELD)
+public class Product  implements Serializable {
+	
+	private static final long serialVersionUID = -2343243243242432341L;
+	
 	@Id
-	private String Id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	private int productId;
 	private int price;
 	private int quantity;
