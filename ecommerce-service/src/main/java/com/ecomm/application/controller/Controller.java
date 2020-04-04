@@ -28,11 +28,14 @@ import com.ecomm.application.model.UserRegistrationRequest;
 import com.ecomm.application.product.service.ProductService;
 import com.ecomm.application.util.Constants;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author Navneet Kaur
  */
 
 @RestController
+@Slf4j
 @RequestMapping("/ecomm")
 public class Controller {
 
@@ -47,6 +50,7 @@ public class Controller {
 
 	@PostMapping("/user/register")
 	public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest){
+		log.info("User Registration API for EmailId: {},  Name: {},  TelephoneNumber: {}",  userRegistrationRequest.getEmailId(), userRegistrationRequest.getName(),userRegistrationRequest.getTelephoneNumber());
 		String response = authService.register(userRegistrationRequest);
 		if(response.contains(Constants.REGISTERED))
 			return new ResponseEntity<String>(response, HttpStatus.CREATED);
@@ -56,6 +60,7 @@ public class Controller {
 	
 	@GetMapping("/user/login")
 	public ResponseEntity<String> login(@RequestBody Credential credential) {
+		log.info("User LOGIN API for username : {},   and userType : {} ",  credential.getUsername(), credential.getUserType());
 		String response = authService.login(credential);
 		if(response.contains(Constants.SUCCESS))
 			return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
@@ -76,6 +81,7 @@ public class Controller {
 	
 	@PutMapping("/user/updateCredentials")
 	public ResponseEntity<String> updateCredentials(@RequestBody UpdateCredentialRequest updateCredentialRequest) {
+		log.info("User Credential-Update API for EmailId: {}", updateCredentialRequest.getEmailId());
 		String response = authService.updateCredentials(updateCredentialRequest);
 		
 		if(response.contains(Constants.UPDATED))

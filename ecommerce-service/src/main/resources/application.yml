@@ -10,3 +10,5 @@ spring:
       driverClassName: org.postgresql.Driver
   jpa:
    database: POSTGRESQL
+  main:
+    banner-mode: "off"
