@@ -6,12 +6,12 @@ package com.ecomm.application.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.ecomm.application.auth.service.AuthService;
-import com.ecomm.application.auth.service.AuthServiceImpl;
 import com.ecomm.application.cart.service.CartService;
 import com.ecomm.application.cart.service.CartServiceImpl;
 import com.ecomm.application.product.service.ProductService;
 import com.ecomm.application.product.service.productServiceImpl;
+import com.ecomm.application.user.service.UserService;
+import com.ecomm.application.user.service.UserServiceImpl;
 
 /**
  * @author Navneet Kaur
@@ -21,8 +21,8 @@ import com.ecomm.application.product.service.productServiceImpl;
 public class BeanConfig {
 
 	@Bean
-	public AuthService getAuthService() {
-		return new AuthServiceImpl();
+	public UserService getAuthService() {
+		return new UserServiceImpl();
 	}
 
 	@Bean

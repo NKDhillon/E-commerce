@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ecomm.application.auth.service;
+package com.ecomm.application.user.service;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import com.ecomm.application.model.UserRegistrationRequest;
  */
 
 @Service
-public interface AuthService {
+public interface UserService {
 
 	/**
 	 * @param userRegistrationRequest

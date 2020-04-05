@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ecomm.application.auth.service;
+package com.ecomm.application.user.service;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.ecomm.application.util.Constants;
  * @author Navneet Kaur
  */
 
-public class AuthServiceImpl implements AuthService {
+public class UserServiceImpl implements UserService {
 
 	
 	@Autowired
