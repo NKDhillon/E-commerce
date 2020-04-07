@@ -23,9 +23,9 @@ public class productServiceImpl implements ProductService {
 	public String addProduct(List<Product> product) {
 		for (Product item : product) {
 			if (repository.findByProductId(item.getProductId()) != null) {
-				item.setQuantity(repository.findByProductId(item.getProductId()).getQuantity() + item.getQuantity());
-				repository.deleteByProductId(item.getProductId());
-				repository.save(item);
+				Product prod = repository.findByProductId(item.getProductId());
+				prod.setQuantity(prod.getQuantity() + item.getQuantity());
+				repository.save(prod);
 			} else {
 				repository.save(item);
 			}
@@ -37,9 +37,13 @@ public class productServiceImpl implements ProductService {
 	public void deleteProduct(List<Product> product) {
 		for (Product item : product) {
 			if (repository.findByProductId(item.getProductId()) != null) {
-				item.setQuantity(repository.findByProductId(item.getProductId()).getQuantity() - item.getQuantity());
-				repository.deleteByProductId(item.getProductId());
-				repository.save(item);
+				Product prod = repository.findByProductId(item.getProductId());
+				if(prod.getQuantity()>item.getQuantity()) {
+					prod.setQuantity(prod.getQuantity() - item.getQuantity());
+				} else {
+					prod.setQuantity(0);
+				}
+				repository.save(prod);
 			}
 		}
 	}

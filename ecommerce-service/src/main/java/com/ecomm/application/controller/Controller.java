@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecomm.application.auth.service.AuthService;
 import com.ecomm.application.cart.service.CartService;
 import com.ecomm.application.model.CartObject;
 import com.ecomm.application.model.Credential;
@@ -26,6 +25,7 @@ import com.ecomm.application.model.Product;
 import com.ecomm.application.model.UpdateCredentialRequest;
 import com.ecomm.application.model.UserRegistrationRequest;
 import com.ecomm.application.product.service.ProductService;
+import com.ecomm.application.user.service.UserService;
 import com.ecomm.application.util.Constants;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Controller {
 
 	@Autowired
-	AuthService authService;
+	UserService authService;
 
 	@Autowired
 	CartService cartService;
@@ -50,7 +50,7 @@ public class Controller {
 
 	@PostMapping("/user/register")
 	public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest){
-		log.info("User Registration API for EmailId: {},  Name: {},  TelephoneNumber: {}",  userRegistrationRequest.getEmailId(), userRegistrationRequest.getName(),userRegistrationRequest.getTelephoneNumber());
+		log.info("*****	Inside User Registration API for EmailId:= {},	Name:= {},	TelephoneNumber:= {}",	userRegistrationRequest.getEmailId(),	userRegistrationRequest.getName(),	userRegistrationRequest.getTelephoneNumber());
 		String response = authService.register(userRegistrationRequest);
 		if(response.contains(Constants.REGISTERED))
 			return new ResponseEntity<String>(response, HttpStatus.CREATED);
@@ -60,7 +60,7 @@ public class Controller {
 	
 	@GetMapping("/user/login")
 	public ResponseEntity<String> login(@RequestBody Credential credential) {
-		log.info("User LOGIN API for username : {},   and userType : {} ",  credential.getUsername(), credential.getUserType());
+		log.info("*****	Inside User LOGIN API for username := {},	UserType := {} ",  credential.getUsername(), credential.getUserType());
 		String response = authService.login(credential);
 		if(response.contains(Constants.SUCCESS))
 			return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
@@ -70,20 +70,21 @@ public class Controller {
 	
 	@GetMapping("/user/viewAll")
 	public ResponseEntity<List<UserRegistrationRequest>> viewAll(){
+		log.info("*****	Inside View-All User API");
 		return new ResponseEntity<List<UserRegistrationRequest>>(authService.viewAll(),HttpStatus.OK);
 	}
 
-	@GetMapping("/logout/{username}")
+	@GetMapping("/user/logout/{username}")
 	public ResponseEntity<String> login(@PathVariable String username) {
+		log.info("*****	Inside User Logout API for Username:= {}",	username);
 		String response = authService.logout();
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 	
 	@PutMapping("/user/updateCredentials")
 	public ResponseEntity<String> updateCredentials(@RequestBody UpdateCredentialRequest updateCredentialRequest) {
-		log.info("User Credential-Update API for EmailId: {}", updateCredentialRequest.getEmailId());
-		String response = authService.updateCredentials(updateCredentialRequest);
-		
+		log.info("*****	Inside User Credential-Update API for EmailId:= {}",	updateCredentialRequest.getEmailId());
+		String response = authService.updateCredentials(updateCredentialRequest);		
 		if(response.contains(Constants.UPDATED))
 			return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
 		else

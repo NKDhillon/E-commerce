@@ -12,3 +12,6 @@ spring:
    database: POSTGRESQL
   main:
     banner-mode: "off"
+
+logging:
+  file: ecomm.log
