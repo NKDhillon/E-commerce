@@ -115,6 +115,10 @@ public class Controller {
 
 	@PostMapping("/product/add")
 	public ResponseEntity<String> addProductList(@RequestBody List<Product> productList) {
+		for (int i = 0; i < productList.size(); i++)
+			log.info("*****	Inside Add Product List API for ProductId:= {},	ProductName:= {}, ProductVendor:= {}, ProductQuantity:= {}",
+					productList.get(i).getProductId(), productList.get(i).getProductName(),
+					productList.get(i).getProductVendor(), productList.get(i).getQuantity());
 		String response = productService.addProduct(productList);
 		return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
 	}
@@ -122,6 +126,9 @@ public class Controller {
 	@SuppressWarnings("rawtypes")
 	@DeleteMapping("/product/delete")
 	public ResponseEntity deleteProductList(@RequestBody List<Product> productList) {
+		for (int i = 0; i < productList.size(); i++)
+		log.info("*****	Inside Delete Product List API for ProductId:= {}, ProductQuantity:= {}",
+				productList.get(i).getProductId(),  productList.get(i).getQuantity());
 		productService.deleteProduct(productList);
 		return new ResponseEntity(HttpStatus.OK);
 	}
