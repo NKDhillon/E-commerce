@@ -58,7 +58,7 @@ public class Controller {
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 	}
 	
-	@GetMapping("/user/login")
+	@PostMapping("/user/login")
 	public ResponseEntity<String> login(@RequestBody Credential credential) {
 		log.info("*****	Inside User LOGIN API for username := {},	UserType := {} ",  credential.getUsername(), credential.getUserType());
 		String response = authService.login(credential);
