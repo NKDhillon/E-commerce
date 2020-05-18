@@ -75,7 +75,7 @@ public class Controller {
 	}
 
 	@GetMapping("/user/logout/{username}")
-	public ResponseEntity<String> login(@PathVariable String username) {
+	public ResponseEntity<String> logout(@PathVariable String username) {
 		log.info("*****	Inside User Logout API for Username:= {}",	username);
 		String response = authService.logout();
 		return new ResponseEntity<String>(response, HttpStatus.OK);
