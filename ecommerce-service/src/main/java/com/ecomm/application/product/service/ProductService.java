@@ -5,21 +5,28 @@ package com.ecomm.application.product.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.ecomm.application.model.Product;
 
 /**
  * @author Navneet Kaur
  */
 
-@Service
 public interface ProductService {
 
-	public String addProduct(List<Product> product);
+	/**
+	 * @param productList
+	 * @return
+	 */
+	String addProduct(List<Product> productList);
 
-	public void deleteProduct(List<Product> product);
+	/**
+	 * @return
+	 */
+	List<Product> viewProduct();
 
-	public List<Product> viewProduct();
-	
+	/**
+	 * @param productList
+	 */
+	void deleteProduct(List<Product> productList);
+
 }

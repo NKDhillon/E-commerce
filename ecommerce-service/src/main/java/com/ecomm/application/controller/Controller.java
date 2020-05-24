@@ -101,7 +101,8 @@ public class Controller {
 	}
 
 	@GetMapping("/cart/get/{username}")
-	public ResponseEntity<List<CartObject>> addToCart(@PathVariable String username) {
+	public ResponseEntity<List<CartObject>> getFromCart(@PathVariable String username) {
+		log.info("*****	Inside Get From Cart API for User: ={}", username); 
 		List<CartObject> responseList = new LinkedList<CartObject>();
 		responseList = cartService.getFromCart(username);
 		return new ResponseEntity<List<CartObject>>(responseList, HttpStatus.OK);
@@ -109,6 +110,7 @@ public class Controller {
 
 	@DeleteMapping("/cart/delete")
 	public ResponseEntity<List<CartObject>> deleteFromCart(@RequestBody CartObject cartObject) {
+		log.info("*****	Inside Delete From Cart API"); 
 		List<CartObject> responseList = new LinkedList<CartObject>();
 		responseList = cartService.deleteFromCart(cartObject);
 		return new ResponseEntity<List<CartObject>>(responseList, HttpStatus.OK);
@@ -136,6 +138,7 @@ public class Controller {
 
 	@GetMapping("/product/viewAll")
 	public ResponseEntity<List<Product>> viewProductList() {
+		log.info("*****	Inside view Product List API"); 
 		List<Product> responseList = new LinkedList<Product>();
 		responseList = productService.viewProduct();
 		return new ResponseEntity<List<Product>>(responseList, HttpStatus.OK);
