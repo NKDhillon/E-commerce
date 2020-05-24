@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecomm.application.cart.service.CartService;
 import com.ecomm.application.model.CartObject;
 import com.ecomm.application.model.Credential;
+import com.ecomm.application.model.OrderObject;
 import com.ecomm.application.model.Product;
 import com.ecomm.application.model.UpdateCredentialRequest;
 import com.ecomm.application.model.UserRegistrationRequest;
@@ -92,17 +93,17 @@ public class Controller {
 		
 	}
 
-	@GetMapping("/cart/add")
-	public ResponseEntity<List<CartObject>> addToCart(@RequestBody CartObject cartObject) {
-		List<CartObject> responseList = new LinkedList<CartObject>();
-		responseList = cartService.addToCart(cartObject);
-		return new ResponseEntity<List<CartObject>>(responseList, HttpStatus.OK);
+	@PostMapping("/cart/add")
+	public ResponseEntity<String> addToCart(@RequestBody OrderObject orderObject) {
+		log.info("*****	Inside Add Product to Cart API for OrderId:= {}, EmailId:= {}",orderObject.getOrderId(), orderObject.getEmailId());	
+		String response= cartService.addToCart(orderObject);
+		return new ResponseEntity<String>(response, HttpStatus.CREATED);
 	}
 
-	@GetMapping("/cart/get")
+	@GetMapping("/cart/get/{username}")
 	public ResponseEntity<List<CartObject>> addToCart(@PathVariable String username) {
 		List<CartObject> responseList = new LinkedList<CartObject>();
-		responseList = cartService.getFromCart();
+		responseList = cartService.getFromCart(username);
 		return new ResponseEntity<List<CartObject>>(responseList, HttpStatus.OK);
 	}
 

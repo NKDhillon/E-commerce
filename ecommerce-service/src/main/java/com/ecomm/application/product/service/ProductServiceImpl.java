@@ -14,7 +14,7 @@ import com.ecomm.application.pg.repo.ProductRepository;
  * @author Navneet Kaur
  */
 
-public class productServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	ProductRepository repository;
