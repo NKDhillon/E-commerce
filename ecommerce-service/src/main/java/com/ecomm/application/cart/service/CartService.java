@@ -16,10 +16,29 @@ import com.ecomm.application.model.OrderObject;
 
 @Service
 public interface CartService {
-	
+
+	/**
+	 * @param orderObject
+	 * @return
+	 */
 	public String addToCart(OrderObject orderObject);
 
+	/**
+	 * @param username
+	 * @return
+	 */
 	public List<CartObject> getFromCart(String username);
 
-	public List<CartObject> deleteFromCart(CartObject cartObject);
+	/**
+	 * @param cartObject
+	 * @return
+	 */
+	public String deleteFromCart(CartObject cartObject);
+
+	/**
+	 * @param username
+	 * @return
+	 */
+	public String deleteAllFromCart(String username);
+
 }
