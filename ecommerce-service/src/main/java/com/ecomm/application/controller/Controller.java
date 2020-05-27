@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecomm.application.cart.service.CartService;
 import com.ecomm.application.model.CartObject;
 import com.ecomm.application.model.Credential;
+import com.ecomm.application.model.OrderObject;
 import com.ecomm.application.model.Product;
 import com.ecomm.application.model.UpdateCredentialRequest;
 import com.ecomm.application.model.UserRegistrationRequest;
@@ -58,7 +59,7 @@ public class Controller {
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 	}
 	
-	@GetMapping("/user/login")
+	@PostMapping("/user/login")
 	public ResponseEntity<String> login(@RequestBody Credential credential) {
 		log.info("*****	Inside User LOGIN API for username := {},	UserType := {} ",  credential.getUsername(), credential.getUserType());
 		String response = authService.login(credential);
@@ -75,7 +76,7 @@ public class Controller {
 	}
 
 	@GetMapping("/user/logout/{username}")
-	public ResponseEntity<String> login(@PathVariable String username) {
+	public ResponseEntity<String> logout(@PathVariable String username) {
 		log.info("*****	Inside User Logout API for Username:= {}",	username);
 		String response = authService.logout();
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -92,29 +93,38 @@ public class Controller {
 		
 	}
 
-	@GetMapping("/cart/add")
-	public ResponseEntity<List<CartObject>> addToCart(@RequestBody CartObject cartObject) {
-		List<CartObject> responseList = new LinkedList<CartObject>();
-		responseList = cartService.addToCart(cartObject);
-		return new ResponseEntity<List<CartObject>>(responseList, HttpStatus.OK);
+	@PostMapping("/cart/add")
+	public ResponseEntity<String> addToCart(@RequestBody OrderObject orderObject) {
+		log.info("*****	Inside Add Product to Cart API for EmailId:= {}", orderObject.getEmailId());	
+		return new ResponseEntity<String>(cartService.addToCart(orderObject), HttpStatus.CREATED);
 	}
 
-	@GetMapping("/cart/get")
-	public ResponseEntity<List<CartObject>> addToCart(@PathVariable String username) {
+	@GetMapping("/cart/get/{username}")
+	public ResponseEntity<List<CartObject>> getFromCart(@PathVariable String username) {
+		log.info("*****	Inside Get From Cart API for User: ={}", username); 
 		List<CartObject> responseList = new LinkedList<CartObject>();
-		responseList = cartService.getFromCart();
+		responseList = cartService.getFromCart(username);
 		return new ResponseEntity<List<CartObject>>(responseList, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/cart/delete")
-	public ResponseEntity<List<CartObject>> deleteFromCart(@RequestBody CartObject cartObject) {
-		List<CartObject> responseList = new LinkedList<CartObject>();
-		responseList = cartService.deleteFromCart(cartObject);
-		return new ResponseEntity<List<CartObject>>(responseList, HttpStatus.OK);
+	public ResponseEntity<String> deleteFromCart(@RequestBody CartObject cartObject) {
+ 		log.info("*****	Inside Delete_From_Cart API"); 
+		return new ResponseEntity<String>(cartService.deleteFromCart(cartObject), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/cart/deleteAll/{username}")
+	public ResponseEntity<String> deleteAllFromCart(@PathVariable String username) {
+		log.info("*****	Inside Delete_All_From_Cart API"); 
+		return new ResponseEntity<String>(cartService.deleteAllFromCart(username), HttpStatus.OK);
 	}
 
 	@PostMapping("/product/add")
 	public ResponseEntity<String> addProductList(@RequestBody List<Product> productList) {
+		for (int i = 0; i < productList.size(); i++)
+			log.info("*****	Inside Add Product List API for ProductId:= {},	ProductName:= {}, ProductVendor:= {}, ProductQuantity:= {}",
+					productList.get(i).getProductId(), productList.get(i).getProductName(),
+					productList.get(i).getProductVendor(), productList.get(i).getQuantity());
 		String response = productService.addProduct(productList);
 		return new ResponseEntity<String>(response, HttpStatus.ACCEPTED);
 	}
@@ -122,12 +132,16 @@ public class Controller {
 	@SuppressWarnings("rawtypes")
 	@DeleteMapping("/product/delete")
 	public ResponseEntity deleteProductList(@RequestBody List<Product> productList) {
+		for (int i = 0; i < productList.size(); i++)
+		log.info("*****	Inside Delete Product List API for ProductId:= {}, ProductQuantity:= {}",
+				productList.get(i).getProductId(),  productList.get(i).getQuantity());
 		productService.deleteProduct(productList);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@GetMapping("/product/viewAll")
 	public ResponseEntity<List<Product>> viewProductList() {
+		log.info("*****	Inside view Product List API"); 
 		List<Product> responseList = new LinkedList<Product>();
 		responseList = productService.viewProduct();
 		return new ResponseEntity<List<Product>>(responseList, HttpStatus.OK);

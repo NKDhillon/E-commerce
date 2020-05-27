@@ -10,11 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ecomm.application.model.Product;
 import com.ecomm.application.pg.repo.ProductRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author Navneet Kaur
  */
 
-public class productServiceImpl implements ProductService {
+
+@Slf4j
+public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	ProductRepository repository;
@@ -38,7 +42,9 @@ public class productServiceImpl implements ProductService {
 		for (Product item : product) {
 			if (repository.findByProductId(item.getProductId()) != null) {
 				Product prod = repository.findByProductId(item.getProductId());
+				log.info("Currently available number of Product for ProductId->" +item.getProductId()+ " = " + prod.getQuantity() );
 				if(prod.getQuantity()>item.getQuantity()) {
+					log.info("Product Quantity in Store := "+ prod.getQuantity() + "Order Quantity :="+ item.getQuantity() );
 					prod.setQuantity(prod.getQuantity() - item.getQuantity());
 				} else {
 					prod.setQuantity(0);

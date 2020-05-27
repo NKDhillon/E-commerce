@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ecomm.application.model.CartObject;
+import com.ecomm.application.model.OrderObject;
 
 /**
  * @author Navneet Kaur
@@ -15,10 +16,29 @@ import com.ecomm.application.model.CartObject;
 
 @Service
 public interface CartService {
-	
-	public List<CartObject> addToCart(CartObject cartObject);
 
-	public List<CartObject> getFromCart();
+	/**
+	 * @param orderObject
+	 * @return
+	 */
+	public String addToCart(OrderObject orderObject);
 
-	public List<CartObject> deleteFromCart(CartObject cartObject);
+	/**
+	 * @param username
+	 * @return
+	 */
+	public List<CartObject> getFromCart(String username);
+
+	/**
+	 * @param cartObject
+	 * @return
+	 */
+	public String deleteFromCart(CartObject cartObject);
+
+	/**
+	 * @param username
+	 * @return
+	 */
+	public String deleteAllFromCart(String username);
+
 }

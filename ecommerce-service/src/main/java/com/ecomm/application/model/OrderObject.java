@@ -12,10 +12,9 @@ import lombok.Data;
  */
 
 @Data
-public class OrderObject {
+public class OrderObject{
 	
-	private List<CartObject> myOrder;
-	private Address address;
-	private String email;
-	private String telephoneNumber;
+	private String emailId;
+	private List<CartObject> cartObject;
+	
 }
