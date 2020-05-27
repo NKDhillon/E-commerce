@@ -95,9 +95,8 @@ public class Controller {
 
 	@PostMapping("/cart/add")
 	public ResponseEntity<String> addToCart(@RequestBody OrderObject orderObject) {
-		log.info("*****	Inside Add Product to Cart API for OrderId:= {}, EmailId:= {}",orderObject.getOrderId(), orderObject.getEmailId());	
-		String response= cartService.addToCart(orderObject);
-		return new ResponseEntity<String>(response, HttpStatus.CREATED);
+		log.info("*****	Inside Add Product to Cart API for EmailId:= {}", orderObject.getEmailId());	
+		return new ResponseEntity<String>(cartService.addToCart(orderObject), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/cart/get/{username}")
@@ -109,11 +108,15 @@ public class Controller {
 	}
 
 	@DeleteMapping("/cart/delete")
-	public ResponseEntity<List<CartObject>> deleteFromCart(@RequestBody CartObject cartObject) {
+	public ResponseEntity<String> deleteFromCart(@RequestBody CartObject cartObject) {
 		log.info("*****	Inside Delete From Cart API"); 
-		List<CartObject> responseList = new LinkedList<CartObject>();
-		responseList = cartService.deleteFromCart(cartObject);
-		return new ResponseEntity<List<CartObject>>(responseList, HttpStatus.OK);
+		return new ResponseEntity<String>(cartService.deleteFromCart(cartObject), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/cart/deleteAll")
+	public ResponseEntity<String> deleteAllFromCart(@RequestBody String username) {
+		log.info("*****	Inside Delete From Cart API"); 
+		return new ResponseEntity<String>(cartService.deleteAllFromCart(username), HttpStatus.OK);
 	}
 
 	@PostMapping("/product/add")
