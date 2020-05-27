@@ -6,12 +6,12 @@ package com.ecomm.application.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.ecomm.application.cart.service.CartService;
-import com.ecomm.application.cart.service.CartServiceImpl;
-import com.ecomm.application.product.service.ProductService;
-import com.ecomm.application.product.service.ProductServiceImpl;
-import com.ecomm.application.user.service.UserService;
-import com.ecomm.application.user.service.UserServiceImpl;
+import com.ecomm.application.services.cart.CartService;
+import com.ecomm.application.services.cart.CartServiceImpl;
+import com.ecomm.application.services.product.ProductService;
+import com.ecomm.application.services.product.ProductServiceImpl;
+import com.ecomm.application.services.user.UserService;
+import com.ecomm.application.services.user.UserServiceImpl;
 
 /**
  * @author Navneet Kaur

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ecomm.application.product.service;
+package com.ecomm.application.services.product;
 
 import java.util.List;
 

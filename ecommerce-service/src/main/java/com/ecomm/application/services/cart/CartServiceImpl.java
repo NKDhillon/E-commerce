@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ecomm.application.cart.service;
+package com.ecomm.application.services.cart;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +12,7 @@ import com.ecomm.application.model.CartObject;
 import com.ecomm.application.model.OrderObject;
 import com.ecomm.application.pg.repo.OrderRepository;
 import com.ecomm.application.pg.repo.ProductRepository;
-import com.ecomm.application.product.service.ProductService;
+import com.ecomm.application.services.product.ProductService;
 import com.ecomm.application.util.Constants;
 
 import lombok.extern.slf4j.Slf4j;

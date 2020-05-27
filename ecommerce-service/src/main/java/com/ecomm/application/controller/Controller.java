@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,15 +19,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecomm.application.cart.service.CartService;
 import com.ecomm.application.model.CartObject;
 import com.ecomm.application.model.Credential;
 import com.ecomm.application.model.OrderObject;
 import com.ecomm.application.model.Product;
 import com.ecomm.application.model.UpdateCredentialRequest;
 import com.ecomm.application.model.UserRegistrationRequest;
-import com.ecomm.application.product.service.ProductService;
-import com.ecomm.application.user.service.UserService;
+import com.ecomm.application.services.cart.CartService;
+import com.ecomm.application.services.product.ProductService;
+import com.ecomm.application.services.user.UserService;
 import com.ecomm.application.util.Constants;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Navneet Kaur
  */
 
+@CrossOrigin
 @RestController
 @Slf4j
 @RequestMapping("/ecomm")
