@@ -17,14 +17,8 @@ import com.ecomm.application.model.CartObject;
 @Repository
 public interface OrderRepository extends JpaRepository<CartObject, Long> {
 	
-	public CartObject findByEmailId(String emailId);
+	public List<CartObject> findByEmailId(String emailId);
 	
-	public List<CartObject> findByOrderId(String string);
-
-	/**
-	 * @param productId
-	 * @return
-	 */
 	public List<CartObject> findByProductId(int productId);
 	
 }
