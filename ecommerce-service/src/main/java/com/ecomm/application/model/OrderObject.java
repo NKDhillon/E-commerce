@@ -15,7 +15,6 @@ import lombok.Data;
 public class OrderObject{
 	
 	private String emailId;
-	private String orderId;
-	private List<Product> products;
+	private List<CartObject> cartObject;
 	
 }
