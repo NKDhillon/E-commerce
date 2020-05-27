@@ -28,8 +28,8 @@ public class CartObject  implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String orderId;
 	private String emailId;
+	private int price;
 	private int productId;
 	private String productName;
 	private int quantity;
