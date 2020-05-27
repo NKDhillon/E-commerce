@@ -109,13 +109,13 @@ public class Controller {
 
 	@DeleteMapping("/cart/delete")
 	public ResponseEntity<String> deleteFromCart(@RequestBody CartObject cartObject) {
-		log.info("*****	Inside Delete From Cart API"); 
+ 		log.info("*****	Inside Delete_From_Cart API"); 
 		return new ResponseEntity<String>(cartService.deleteFromCart(cartObject), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/cart/deleteAll")
-	public ResponseEntity<String> deleteAllFromCart(@RequestBody String username) {
-		log.info("*****	Inside Delete From Cart API"); 
+	@DeleteMapping("/cart/deleteAll/{username}")
+	public ResponseEntity<String> deleteAllFromCart(@PathVariable String username) {
+		log.info("*****	Inside Delete_All_From_Cart API"); 
 		return new ResponseEntity<String>(cartService.deleteAllFromCart(username), HttpStatus.OK);
 	}
 
