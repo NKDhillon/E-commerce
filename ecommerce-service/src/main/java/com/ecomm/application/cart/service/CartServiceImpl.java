@@ -3,6 +3,7 @@
  */
 package com.ecomm.application.cart.service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class CartServiceImpl implements CartService {
 	public String addToCart(OrderObject orderObject) {
 		log.info("***** Inside add to Cart method of CartServiceImplementation");
 		List<CartObject> oldCartObjects = orderRepository.findByEmailId(orderObject.getEmailId());
+		List<CartObject> commonObjects = new LinkedList<CartObject>();
 		if (oldCartObjects.isEmpty()) {
 			log.info("***** Inside Cart is all empty with no products added to the cart");
 			for (CartObject cartObject : orderObject.getCartObject()) {
@@ -47,17 +49,22 @@ public class CartServiceImpl implements CartService {
 				for (int i = 0; i < oldCartObjects.size(); i++) {
 					if (cartObject.getProductId() == (oldCartObjects.get(i).getProductId())
 							&& cartObject.getEmailId().equalsIgnoreCase(oldCartObjects.get(i).getEmailId())) {
-						log.info("***** Inside particular Product exist in the Cart");
+						log.info("***** Inside particular Product exist in the Cart with ProductId := {}",
+								oldCartObjects.get(i).getProductId());
 						oldCartObjects.get(i)
 								.setQuantity(oldCartObjects.get(i).getQuantity() + cartObject.getQuantity());
 						oldCartObjects.get(i).setPrice(oldCartObjects.get(i).getQuantity() * cartObject.getPrice());
-
-					} else if (cartObject.getEmailId().equalsIgnoreCase(oldCartObjects.get(i).getEmailId())) {
-						log.info("***** Particular Product do not exist in the Cart");
-						oldCartObjects.add(cartObject);
+						commonObjects.add(cartObject);
 					}
 				}
 			}
+			orderObject.getCartObject().removeAll(commonObjects);
+			for (CartObject cartObj : orderObject.getCartObject()) {
+				log.info("***** Particular Product do not exist in the Cart with ProductId := {}",
+						cartObj.getProductId());
+				oldCartObjects.add(cartObj);
+			}
+
 			log.info("***** Updated CartObjects to for user " + orderObject.getEmailId() + ":\n"
 					+ oldCartObjects.toString());
 			for (CartObject obj : oldCartObjects) {
